@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.1/redux.min.js"></script>
+<body>
+    <div>
+        <p>Counter is <span id="counter">0</span></p>
+        <button id="inc">Increment</button>
+        <button id="dec">Decrement</button>
+        <button id="reset">Reset</button>
+    </div>
+</body>
+<script>
+
+    const initialState = { counter:0};
+
+    //reducer
+    function counterReducer(state = initialState,action){
+        switch (action.type) {
+            case COUNTER_INC:{
+                return {
+                  counter : state.counter + action.payload
+                }
+                // return {
+                //     ...state,
+                //     counter: state.counter + 1
+                    
+                //}
+
+            }
+                
+            case COUNTER_DEC:  {
+                return {
+                    counter:state.counter - action.payload
+                }
+            } 
+            case COUNTER_RESET:{
+                return {
+                    counter:0
+                }
+            } 
+        
+            default:
+               return state;
+        }
+
+    }
+
+
+    //action
+    const COUNTER_INC = 'Counter Increment';
+    const COUNTER_DEC = 'Counter Decrement';
+    const COUNTER_RESET = 'Counter reset';
+    //action provider 
+
+    function counter_inc(incrementBy){
+        return {
+            type:COUNTER_INC,
+            payload:incrementBy
+        }
+    }
+
+    function counter_dec(decrementBy){
+        return {
+            type:COUNTER_DEC,
+            payload:decrementBy
+        }
+    }
+
+    // store
+    const store = Redux.createStore(counterReducer);
+    store.subscribe(render);
+
+    function render(){
+        document.getElementById("counter").innerHTML = store.getState().counter;
+    }
+    //events
+    document.getElementById("inc").addEventListener('click',() =>{
+        store.dispatch(counter_inc(1));
+    });
+
+    document.getElementById("dec").addEventListener('click',() =>{
+        if(store.getState().counter > 0){
+            store.dispatch(counter_dec(1));
+        }else{
+            window.alert("Value must be greater than 0");
+        }
+       
+    });
+
+    document.getElementById("reset").addEventListener('click',() =>{
+        store.dispatch({
+            type:COUNTER_RESET
+        });
+    });
+    render();
+</script>
+</html>

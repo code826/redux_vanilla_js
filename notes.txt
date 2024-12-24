@@ -1,0 +1,18 @@
+//Redux is state management libraray , help to maintain the state of application in predicatble way
+
+
+// disadvantage of props drilling
+
+//comparision b/w context api v/s redux 
+ performance 
+ debug
+ complexity with scaling
+
+//currying
+//pure function
+// Redux architecture
+// createan application using redux , 
+
+//redux architecture
+
+
